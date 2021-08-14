@@ -3,7 +3,7 @@
 [![YouTube](https://img.shields.io/youtube/channel/views/UCQD9zAJeF1q4r8haWkia0rA?label=Youtube&style=for-the-badge)](https://www.youtube.com/channel/UCQD9zAJeF1q4r8haWkia0rA)
 
 
-A JS class that enhances the CrytoZoon.app UX experience while offering an edge in battle. DugeonMasterJS is open source, but access to the API requires a `.01` BNB tip to the development team every 40 days.  
+A JS class that enhances the https://app.cryptozoon.io/ UX experience while offering an edge in battle. ZOANMasterJS is open source, but access to the API requires a `.01` BNB tip to the development team every 40 days.  
 
 
 ## Features
