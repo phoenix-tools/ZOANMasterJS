@@ -33,7 +33,7 @@ https://github.com/phoenix-tools/ZOANMasterJS/blob/master/ZOANMasterJS.js
 Navigate to https://app.cryptozoon.io/
 
 Open the newly installed Chrome Extension's Custom CSS and JS extension
-<img src="https://user-images.githubusercontent.com/2002207/129067375-6f42ff20-c50d-43d9-a6ee-d66988635f74.png" width="800">
+<img src="https://user-images.githubusercontent.com/2002207/129460857-7c061527-6e4f-48a9-97b4-b07b09958bcb.png" width="800">
 
 And click "add new" to create a new custom JS/CSS profile for the CrytoZoon website
 <img src="https://user-images.githubusercontent.com/2002207/128646467-657c566b-2abf-4257-a007-4046923ae12b.png" width="800">
