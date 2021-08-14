@@ -17,6 +17,8 @@ A JS class that enhances the CrytoZoon.app UX experience while offering an edge 
 
 ### ZOANMasterJS Header
 
+![image](https://user-images.githubusercontent.com/2002207/129460752-afb2a731-a143-4019-8dc3-02192d0e5e67.png)
+
 
 ## How to Install in Chrome
 
@@ -35,7 +37,8 @@ And click "add new" to create a new custom JS/CSS profile for the CrytoZoon webs
 <img src="https://user-images.githubusercontent.com/2002207/128646467-657c566b-2abf-4257-a007-4046923ae12b.png" width="800">
 
 Add the raw code that was copied earlier into the JavaScript panel, and save the profile.
-<img src="https://user-images.githubusercontent.com/2002207/129425307-2e52df28-1c69-4fb7-867b-10160cce79c0.png" width="800">
+
+<img src="https://user-images.githubusercontent.com/2002207/129460758-51f861ec-9cc2-489b-90d6-593c32d45ecf.png" width="800">
 
 And that's it! The next time you access https://app.cryptozoon.io/ the JavaScript code should be loaded and ZOANMasterJS operating. 
 
