@@ -7,6 +7,8 @@ A JS class that enhances the https://app.cryptozoon.io/ UX experience while offe
 
 ZOANMasterJS is open source, but access to the API requires a `.01` BNB tip to the development team every 40 days.  
 
+You can still download and install this asset and enjoy a 14 day free trial without having to tip any BNB. The trial is tied to your MetaMask wallet address.
+
 
 ## Features
 
