@@ -3,7 +3,7 @@
  * @title ZOANMasterJS.js
  * @description Welcome ZOANMasterJS! ZOANMasterJS is a JS class that enhances the app.cryptozoon.io UX experience while also offering an edge to battle
  * 
- * @ver 1.0.1
+ * @ver 1.1.1
  * @author: phoenixtools
  * @contributors: Hudson Atwell
  */
@@ -126,7 +126,7 @@
 			ZOANMasterJS.listeners.navClick = true;
 			
 			document.querySelector('.nav-item').addEventListener('click', function() {
-				console.log("nav item clicked")
+				//console.log("nav item clicked")
 			})
 		}
 		
@@ -198,8 +198,8 @@
 		var htmlTemplate = ''
 		+ '<div class="ZOANMasterJS" style="background-color: #000; color:#fff;display:flex;justify-content:space-between;flex-wrap: wrap;font-family:system-ui;text-align: end;padding-right:26px;position:fixed; width:100vw;z-index:100;padding-left:2px;padding-top:4px;padding-bottom:2px; font-size:13px;">'
 	
-		+ '<div class="bm-col-1" style="padding-top: 5px;">'
-		+ '		ZOANMasterJS '
+		+ '<div class="bm-col-1" style="padding-top: 5px;padding-left:5px;">'
+		+ '		<b>ZOANMasterJS</b> '
 		
 		+ '		<span class="header-separator" style="margin-left:10px;margin-right:10px"> | </span>'
 		
@@ -242,9 +242,13 @@
 		+ '     <span class="header-separator" style="margin-left:10px;margin-right:10px"> | </span>'
 		+ '		</div>'
 		
-		+ '		<div class="bnb-tip-container" style="display:inline-block;">'
+		+ '		<div class="bnb-tip-container" style="display:none;">'
 		+ '     <a class="bnb-tip"  href="#tip-ZOANMasterJS-dev"  title="Send a Tip to the ZOANMasterJS Developemnt Team!"><b>TIP <span class="recommended-bnb-tip">.01</span> BNB</b></a>'
-		+ '		</div>';
+		+ '		</div>'
+		
+		+ '		<div class="bnb-free-trial-counter" style="display:none;" title="Days remaining in the free BladeMasterJS trial.">'
+		+ '     <b> <span class="dono-days-remaining"></span></b>'
+		+ '		</div>'
 		
 		+ '</div>'
 		+ '</div>'
@@ -300,13 +304,15 @@
 			/* load BNB Balance and Calculate Transactions from Custom API */
 			var bscscanRequest = new XMLHttpRequest();
 				
-			var params = {
+		var params = {
 	            ethAddress: window.ethereum.selectedAddress.toLowerCase(),
 	            clientDateTime: new Date().getTime(),
 	            clientTimeZoneOffset: new Date().getTimezoneOffset(),
+	            product: "zoanmasterjs",
+	            query: ["tokenBalance","bnbBalance","txFees"]
 	        }
 	        
-	        apiURL = new URL("https://bscscan-api.vercel.app/api/zoonstats");
+	        apiURL = new URL("https://phoenixtools.io/api/gamestats/");
 	        
 	        for (const key in params ) {
 	        	apiURL.searchParams.append(key , params[key]);
@@ -320,32 +326,42 @@
 		
 				var responseJSON  = JSON.parse(bscscanRequest.response);
 				
-				if (!responseJSON.isDono && !responseJSON.isWhiteListed) {
+				if (!responseJSON.dono.isDono && !responseJSON.isWhiteListed && responseJSON.trial.status != "active") {
+					
 					document.querySelector('.ZOANMasterJS').style.justifyContent = "flex-end";
 					document.querySelector('.bm-col-1').style.width = "90%";
+					document.querySelector('.bnb-tip-container').style.display = "inline-block";
 					
 					document.querySelector('.bm-col-1').innerHTML = '<div class="dono-activate-promot" style="display: contents;padding-right:10px;width:100%;"><marquee>YOOOOO! <b>ZOANMasterJS</b> costs <span style="color:gold"><b>.01 BNB</b></span> for every <b>40 days</b> of use. --------  Click the <b>TIP</b> button to the right to activate your copy!  --------  Make sure your <b>MetaMask</b> is set to the <b>Binance Smart Chain</b> before tipping!  -------- There might be a delay between tipping and asset activation depending on the speed of the bscscan.com API. If activation takes longer than an hour then please reach out on our <a href="https://discord.gg/6AjVj3s9aN" target="_blank">Discord</a> for manual assistance :) </marquee></div>';
 					document.querySelector('.zoon-ballance-container').parentNode.removeChild(document.querySelector('.zoon-ballance-container'))
 					document.querySelector('.bnb-ballance-container').parentNode.removeChild(document.querySelector('.bnb-ballance-container'))
 					document.querySelector('.fees-container').parentNode.removeChild(document.querySelector('.fees-container'))
 					return;
+				} 
+				else if (responseJSON.dono.isDono || responseJSON.isWhiteListed) {
+					document.querySelector('.bnb-tip').title = "You have " + responseJSON.dono.daysRemaining + " days until the next donation.";
+					document.querySelector('.bnb-tip-container').style.display = "inline-block";
+				}	
+				else if (responseJSON.trial.status == "active") {
+					document.querySelector('.bnb-free-trial-counter').style.display = "inline-block";
+					document.querySelector('.dono-days-remaining').innerText = responseJSON.trial.daysRemaining + " Days ";
 				}
 				
 				
 				/* get user zoon balance, does not include staked zoon */
-				ZOANMasterJS.balances.zoon = parseFloat(responseJSON.balances.zoon.inETH).toFixed(3);
+				ZOANMasterJS.balances.zoon = parseFloat(responseJSON.balances.token.inETH).toFixed(2);
 				ZOANMasterJS.balances.bnb = parseFloat(responseJSON.balances.bnb.inETH).toFixed(3);
 				
 				/* figure out dollar balance */
 				ZOANMasterJS.balances.usd_bnb =  ( parseFloat(ZOANMasterJS.balances.bnb , 8 ) * parseFloat(ZOANMasterJS.marketPrices.bnb , 8 ) ).toFixed(2);
 				
-				ZOANMasterJS.balances.zoon_bnb =  ( parseFloat(ZOANMasterJS.balances.usd_bnb , 8 ) / parseFloat(ZOANMasterJS.marketPrices.zoon , 8 ) ).toFixed(3);
+				ZOANMasterJS.balances.zoon_bnb =  ( parseFloat(ZOANMasterJS.balances.usd_bnb , 8 ) / parseFloat(ZOANMasterJS.marketPrices.zoon , 8 ) ).toFixed(2);
 				
 				
 						
 				/* figure out zoon balance */
 				ZOANMasterJS.balances.usd_zoon =  ( parseFloat(ZOANMasterJS.balances.zoon , 8 ) * parseFloat(ZOANMasterJS.marketPrices.zoon , 8 ) ).toFixed(2);
-				ZOANMasterJS.balances.bnb_zoon =  ( parseFloat(ZOANMasterJS.balances.usd_zoon , 8 ) / parseFloat(ZOANMasterJS.marketPrices.bnb , 8 ) ).toFixed(3);
+				ZOANMasterJS.balances.bnb_zoon =  ( parseFloat(ZOANMasterJS.balances.usd_zoon , 8 ) / parseFloat(ZOANMasterJS.marketPrices.bnb , 8 ) ).toFixed(2);
 			
 				
 				/* set these prices into the header */
