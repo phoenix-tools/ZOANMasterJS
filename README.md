@@ -25,7 +25,7 @@ You can still download and install this asset and enjoy a 14 day free trial with
 ![image](https://user-images.githubusercontent.com/2002207/129460752-afb2a731-a143-4019-8dc3-02192d0e5e67.png)
 
 ### Battle History Insights
-![image](https://user-images.githubusercontent.com/2002207/130895420-2b3d6301-56e6-4d02-b1c4-ccdccfcc1e59.png)
+![image](https://user-images.githubusercontent.com/2002207/130895535-d66b766e-d63d-4a07-9575-1c7cb3f75393.png)
 
 ## How to Install in Chrome
 
