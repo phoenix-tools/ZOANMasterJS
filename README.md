@@ -16,6 +16,7 @@ You can still download and install this asset and enjoy a 14 day free trial with
 * Prominently displays the current user's ZOON balance as well as its converted values in USD and BNB
 * Prominently displays the current user's BNB balance as well as its converted values in USD and ZOON
 * Shows user BNB fee expenditure for the CrytoZoon game in the following ranges: 24 hours, 7 days, 31 days.
+* Provides fight tracking statistics that keeps track of win percentage, ZOON Payouts, BNB expenditures, and overall profits based on current market prices.
 
 ## Feature Screenshots
 
@@ -23,6 +24,8 @@ You can still download and install this asset and enjoy a 14 day free trial with
 
 ![image](https://user-images.githubusercontent.com/2002207/129460752-afb2a731-a143-4019-8dc3-02192d0e5e67.png)
 
+### Battle History Insights
+![image](https://user-images.githubusercontent.com/2002207/130895420-2b3d6301-56e6-4d02-b1c4-ccdccfcc1e59.png)
 
 ## How to Install in Chrome
 
