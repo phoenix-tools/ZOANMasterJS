@@ -3,14 +3,14 @@
  * @title ZOANMasterJS.js
  * @description Welcome ZOANMasterJS! ZOANMasterJS is a JS class that enhances the app.cryptozoon.io UX experience while also offering an edge to battle
  * 
- * @ver 2.2.1
+ * @ver 2.2.2
  * @author: phoenixtools
  * @contributors: Hudson Atwell
  */
  
  var ZOANMasterJS = {
     
-	version: "2.2.1",
+	version: "2.2.2",
     scriptsLoaded : false,
 	balances : {},
 	marketPrices : {},
@@ -179,11 +179,13 @@
 
 			ZOANMasterJS.listeners.showFights = true;
 			ZOANMasterJS.listeners.row2 = false;
+			ZOANMasterJS.listeners.row3 = false;
 				
 			document.querySelector('.show-fight').addEventListener('click', function() {
 				var fightHistory = document.querySelector('.fight-history');
 				var row1 = document.querySelector('.stats-row-1');
 				var row2 = document.querySelector('.stats-row-2');
+				var row3 = document.querySelector('.stats-row-3');
 				
 				
 				if (window.getComputedStyle(fightHistory).display == "none") {
@@ -196,13 +198,17 @@
 					ZOANMasterJS.listeners.row2 = true;
 					
 				}
-				else if (row2.style.display == "flex") {
-					fightHistory.style.height = "260px";
-					row2.style.display = "none"
-					ZOANMasterJS.topOffet = "260px";
-				} else {
+				else if (!ZOANMasterJS.listeners.row3) {
+					row3.style.display = "flex"
+					ZOANMasterJS.listeners.row3 = true;
+					
+				}
+				else {
 					fightHistory.style.display = "none";
+					row2.style.display = "none";
+					row3.style.display = "none";
 					ZOANMasterJS.listeners.row2 = false;
+					ZOANMasterJS.listeners.row3 = false;
 					ZOANMasterJS.topOffet = "33px";
 				}
 			
@@ -418,49 +424,72 @@
     	+ '			</span>'
     	+ '		</div>'
     
-		+ '    <div class="stats--container  stats-row-1" style="">'
-		+ '      <div class="stat--container">'
-		+ '        <div class="stat--label">BATTLES</div>'
-		+ '            <div class="stat--value stat-battles">0</div>'
+		+ '    <div class="stats--container stats-row-1" style="">'
+		+ '     	<div class="stat--container">'
+		+ '     		<div class="stat--label">BATTLES</div>'
+		+ '         	<div class="stat--value stat-battles">0</div>'
+		+ '     	</div>'
+		+ '     	<div class="stat--container">'
+		+ '         	<div class="stat--label">WINS</div>'
+		+ '     		<div class="stat--value stat-wins">0</div>'
+		+ '     	</div>'
+		+ '     	<div class="stat--container">'
+		+ '         	<div class="stat--label">LOSSES</div>'
+		+ '         	<div class="stat--value stat-losses" >0</div>'
 		+ '        </div>'
-		+ '        <div class="stat--container">'
-		+ '            <div class="stat--label">WINS</div>'
-		+ '           <div class="stat--value stat-wins">0</div>'
-		+ '        </div>'
-		+ '        <div class="stat--container">'
-		+ '           <div class="stat--label">LOSSES</div>'
-		+ '            <div class="stat--value stat-losses" >0</div>'
-		+ '        </div>'
-		+ '        <div class="stat--container">'
-		+ '            <div class="stat--label">ZOON EARNED</div>'
-		+ '            <div class="stat--value stat-tokens" style="color:gold;">.0</div>'
-		+ '        </div>'
-		+ '       <div class="stat--container">'
+		+ '     	<div class="stat--container">'
+		+ '         	<div class="stat--label">ZOON EARNED</div>'
+		+ '         	<div class="stat--value stat-tokens" style="color:gold;">.0</div>'
+		+ '     	</div>'
+		+ '     	<div class="stat--container">'
 		+ '            <div class="stat--label">FEES BNB</div>'
 		+ '            <div class="stat--value stat-fees">.00 BNB</div>'
-		+ '        </div>'
-		+ '        <div class="stat--container">'
+		+ '     	</div>'
+		+ '     	<div class="stat--container">'
 		+ '            <div class="stat--label">~PROFIT</div>'
 		+ '            <div class="stat--value stat-profit"  style="color:lightgreen;">$0</div>'
-		+ '        </div>'
+		+ '     	</div>'
 		+ '    </div>'
 		
-		+ '    <div class="stats--container stats-row-2" style=" display:none;">'
-		+ '      <div class="stat--container">'
-		+ '        <div class="stat--label">WIN PERCENTAGE</div>'
-		+ '            <div class="stat--value stat-win-percentage">0</div>'
+		+ ' 	<div class="stats--container stats-row-2" style=" display:none;">'
+		+ ' 		<div class="stat--container">'
+		+ '     		<div class="stat--label">WIN PERCENTAGE</div>'
+		+ '         	<div class="stat--value stat-win-percentage">0</div>'
+		+ '     	</div>'
+		+ '     	<div class="stat--container">'
+		+ '     		<div class="stat--label">AVERAGE ZOON / BATTLE</div>'
+		+ '     		<div class="stat--value stat-average-zoon-battle" style="color:gold">0</div>'
+		+ '     	</div>'
+		+ '     	<div class="stat--container">'
+		+ '         	<div class="stat--label">AVERAGE EXP / BATTLE</div>'
+		+ '         	<div class="stat--value stat-average-exp-battle">0</div>'
 		+ '        </div>'
 		+ '        <div class="stat--container">'
-		+ '            <div class="stat--label">AVERAGE ZOON</div>'
-		+ '           <div class="stat--value stat-average-zoon" style="color:gold">0</div>'
+		+ '         	<div class="stat--label">AVERAGE FEE / BATTLE </div>'
+		+ '         	<div class="stat--value stat-average-fee-battle">0</div>'
+		+ '     	</div>'
+		+ '     	<div class="stat--container">'
+		+ '         	<div class="stat--label">AVERAGE PROFIT / BATTLE</div>'
+		+ '         	<div class="stat--value stat-average-profit-battle">0</div>'
+		+ '     	</div>'
+		+ '    </div>'
+		
+		+ '    <div class="stats--container stats-row-3" style=" display:none;">'
+		+ '        <div class="stat--container">'
+		+ '         	<div class="stat--label">AVERAGE ZOON / WIN</div>'
+		+ '         	<div class="stat--value stat-average-zoon-win" style="color:gold">0</div>'
+		+ '         </div>'
+		+ '     	<div class="stat--container">'
+		+ '         	<div class="stat--label">AVERAGE EXP / WIN</div>'
+		+ '         	<div class="stat--value stat-average-exp-win" >0</div>'
+		+ '     	</div>'
+		+ '        <div class="stat--container">'
+		+ '         	<div class="stat--label">AVERAGE FEE / WIN </div>'
+		+ '         	<div class="stat--value stat-average-fee-win">0</div>'
 		+ '        </div>'
 		+ '        <div class="stat--container">'
-		+ '            <div class="stat--label">AVERAGE FEE</div>'
-		+ '           <div class="stat--value stat-average-fee">0</div>'
-		+ '        </div>'
-		+ '        <div class="stat--container">'
-		+ '            <div class="stat--label">AVERAGE PROFIT</div>'
-		+ '           <div class="stat--value stat-average-profit">0</div>'
+		+ '         	<div class="stat--label">AVERAGE PROFIT / WIN</div>'
+		+ '         	<div class="stat--value stat-average-profit-win">0</div>'
 		+ '        </div>'
 		+ '    </div>'
 		
@@ -698,37 +727,75 @@
 			document.querySelector('.stat-win-percentage').innerText = winPercentage.toFixed(0) + "%";
 		}
 		
+		/* get average EXP */
+		if (!ZOANMasterJS.gameStats.fights[period].expGains) {
+			document.querySelector('.stat-average-zoon-battle').innerText = "0"; 
+			document.querySelector('.stat-average-zoon-win').innerText = "0"; 
+		} else {
+			/* per battle */
+			var averageExpGains =  ( ZOANMasterJS.gameStats.fights[period].expGains / ZOANMasterJS.gameStats.fights[period].totalFights )
+			document.querySelector('.stat-average-exp-battle').innerText = averageExpGains.toFixed(2) + ' EXP';
+			
+			/* per win */
+			var averageExpGains =  ( ZOANMasterJS.gameStats.fights[period].expGains / ZOANMasterJS.gameStats.fights[period].wins )
+			document.querySelector('.stat-average-exp-win').innerText = averageExpGains.toFixed(2) + ' EXP';
+		}
+		
 		/* get average ZOON */
 		if (!ZOANMasterJS.gameStats.fights[period].tokenGains) {
-			document.querySelector('.stat-average-zoon').innerText = "0"; 
+			document.querySelector('.stat-average-zoon-battle').innerText = "0"; 
+			document.querySelector('.stat-average-zoon-win').innerText = "0"; 
 		} else {
+			/* per battle */
 			var averageTokenGains =  ( ZOANMasterJS.gameStats.fights[period].tokenGains / ZOANMasterJS.gameStats.fights[period].totalFights )
 			var marketAverageTokenGains = ZOANMasterJS.marketPrices.zoon * averageTokenGains;
-			document.querySelector('.stat-average-zoon').innerText = averageTokenGains.toFixed(2) + ' ($'+marketAverageTokenGains.toFixed(2)+')';
+			document.querySelector('.stat-average-zoon-battle').innerText = averageTokenGains.toFixed(2) + ' ($'+marketAverageTokenGains.toFixed(2)+')';
+			
+			/* per win */
+			var averageTokenGains =  ( ZOANMasterJS.gameStats.fights[period].tokenGains / ZOANMasterJS.gameStats.fights[period].wins )
+			var marketAverageTokenGains = ZOANMasterJS.marketPrices.zoon * averageTokenGains;
+			document.querySelector('.stat-average-zoon-win').innerText = averageTokenGains.toFixed(2) + ' ($'+marketAverageTokenGains.toFixed(2)+')';
 		}
 		
 		/* get average fee */
 		if (!ZOANMasterJS.gameStats.fights[period].fees) {
-			document.querySelector('.stat-average-fee').innerText = "0"; 
+			document.querySelector('.stat-average-fee-battle').innerText = "0"; 
+			document.querySelector('.stat-average-fee-win').innerText = "0"; 
 		} else {
+			/* per battle */
 			var averageFees =  ( ZOANMasterJS.gameStats.fights[period].fees / ZOANMasterJS.gameStats.fights[period].totalFights )
 			var marketAverageFees = ZOANMasterJS.marketPrices.bnb * averageFees;
-			document.querySelector('.stat-average-fee').innerText = averageFees.toFixed(4) + ' ($'+marketAverageFees.toFixed(2)+')';
+			document.querySelector('.stat-average-fee-battle').innerText = averageFees.toFixed(4) + ' ($'+marketAverageFees.toFixed(2)+')';
+			
+			/* per win */
+			var averageFees =  ( ZOANMasterJS.gameStats.fights[period].fees / ZOANMasterJS.gameStats.fights[period].wins )
+			var marketAverageFees = ZOANMasterJS.marketPrices.bnb * averageFees;
+			document.querySelector('.stat-average-fee-win').innerText = averageFees.toFixed(4) + ' ($'+marketAverageFees.toFixed(2)+')';
 		}
 		
 		/* get average profit */
 		if (!profit) {
-			document.querySelector('.stat-average-profit').innerText = "0"; 
+			document.querySelector('.stat-average-profit-battle').innerText = "0"; 
+			document.querySelector('.stat-average-profit-win').innerText = "0"; 
 		} else {
-			var averageProfit =  ( profit / ZOANMasterJS.gameStats.fights[period].totalFights )
+			var averageProfitBattle =  ( profit / ZOANMasterJS.gameStats.fights[period].totalFights )
+			var averageProfitWins =  ( profit / ZOANMasterJS.gameStats.fights[period].wins )
 
 			
-			if (averageProfit < 0 ) {
-				document.querySelector('.stat-average-profit').innerText = '-$' + averageProfit.toFixed(2).replace('-','');
-				document.querySelector('.stat-average-profit').style.color = "tomato"; 
+			if (averageProfitBattle < 0 ) {
+				document.querySelector('.stat-average-profit-battle').innerText = '-$' + averageProfitBattle.toFixed(2).replace('-','');
+				document.querySelector('.stat-average-profit-battle').style.color = "tomato"; 
 			} else {
-				document.querySelector('.stat-average-profit').innerText = '$' + averageProfit.toFixed(2)
-				document.querySelector('.stat-average-profit').style.color = "lightgreen"; 
+				document.querySelector('.stat-average-profit-battle').innerText = '$' + averageProfitBattle.toFixed(2)
+				document.querySelector('.stat-average-profit-battle').style.color = "lightgreen"; 
+			}
+			
+			if (averageProfitWins < 0 ) {
+				document.querySelector('.stat-average-profit-win').innerText = '-$' + averageProfitWins.toFixed(2).replace('-','');
+				document.querySelector('.stat-average-profit-win').style.color = "tomato"; 
+			} else {
+				document.querySelector('.stat-average-profit-win').innerText = '$' + averageProfitWins.toFixed(2)
+				document.querySelector('.stat-average-profit-win').style.color = "lightgreen"; 
 			}
 		}
 	}
