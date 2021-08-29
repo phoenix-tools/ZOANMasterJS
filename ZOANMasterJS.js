@@ -3,14 +3,14 @@
  * @title ZOANMasterJS.js
  * @description Welcome ZOANMasterJS! ZOANMasterJS is a JS class that enhances the app.cryptozoon.io UX experience while also offering an edge to battle
  * 
- * @ver 2.2.2
+ * @ver 2.2.3
  * @author: phoenixtools
  * @contributors: Hudson Atwell
  */
  
  var ZOANMasterJS = {
     
-	version: "2.2.2",
+	version: "2.2.3",
     scriptsLoaded : false,
 	balances : {},
 	marketPrices : {},
@@ -49,6 +49,9 @@
 		
 		/* remove header */
 		document.querySelector('.ZOANMasterJS').parentNode.removeChild(document.querySelector('.ZOANMasterJS'));
+		
+		/* remove fight history */
+		document.querySelector('.fight-history').parentNode.removeChild(document.querySelector('.fight-history'));
 			
 		/* destroy all current intervals */
 		for (key in ZOANMasterJS.intervals) {
@@ -62,6 +65,8 @@
 		this.listeners = {}
 		this.currentFeeScope = "today"
 		this.currentBattleScope = "today"
+		this.topOffet = "33px"
+		
 		
 	}
 	
@@ -87,6 +92,27 @@
 	,
 	
 	loadListeners : function() {
+		
+		/**
+		 *Listen for Refresh
+		 */
+		if (document.querySelector('#refresh-zoanmaster') && !ZOANMasterJS.listeners.refresh) {
+			
+			ZOANMasterJS.listeners.refresh = true;
+			
+			/* listen for TIP BNB event */
+			document.querySelector('#refresh-zoanmaster').addEventListener('click', function() {
+				/* Destroy BladeMaserJS instance */
+				ZOANMasterJS.destroyCurrentInstance()
+				
+				/* Rebuild ZOANMasterJS instance */
+				setTimeout(function() {
+					ZOANMasterJS.init();
+					ZOANMasterJS.checkForUpdates();
+				}, 500 )
+			}  )
+		}
+		
 		
 		/**
 		 *Listen for BNB tip 
@@ -146,7 +172,6 @@
 			
 			
 			ZOANMasterJS.listeners.feeScopeForward = true;
-			
 			/* listen for TIP zoon event */
 			document.querySelector('.cycle-fee-scope-forward').addEventListener('click', function() {
 				
@@ -220,7 +245,7 @@
 		 * Cycle the fight stats forward
 		 */
 		 if (document.querySelector('.cycle-fight-stats-forward')  && !ZOANMasterJS.listeners.battleScopeForward) {
-			
+
 			
 			ZOANMasterJS.listeners.battleScopeForward = true;
 			
@@ -326,6 +351,7 @@
 		+ '<div class="ZOANMasterJS" style="background-color: #000; color:#fff;display:flex;justify-content:space-between;flex-wrap: wrap;font-family:system-ui;text-align: end;padding-right:26px;position:fixed; width:100vw;z-index:100;padding-left:2px;padding-top:4px;padding-bottom:2px; font-size:13px;">'
 	
 		+ '<div class="bm-col-1" style="padding-top: 5px;padding-left:5px;">'
+		+ '		<span id="refresh-zoanmaster" style="color: lightgreen;margin-right: 4px;cursor: pointer;" title="Reload ZoanMasterJS">♻</span>'
 		+ '		<b>ZOANMasterJS</b> '
 		
 		+ '		<span class="header-separator" style="margin-left:10px;margin-right:10px"> | </span>'
@@ -737,7 +763,7 @@
 			document.querySelector('.stat-average-exp-battle').innerText = averageExpGains.toFixed(2) + ' EXP';
 			
 			/* per win */
-			var averageExpGains =  ( ZOANMasterJS.gameStats.fights[period].expGains / ZOANMasterJS.gameStats.fights[period].wins )
+			var averageExpGains =  ( ZOANMasterJS.gameStats.fights[period].winData.expGains / ZOANMasterJS.gameStats.fights[period].wins )
 			document.querySelector('.stat-average-exp-win').innerText = averageExpGains.toFixed(2) + ' EXP';
 		}
 		
@@ -752,7 +778,7 @@
 			document.querySelector('.stat-average-zoon-battle').innerText = averageTokenGains.toFixed(2) + ' ($'+marketAverageTokenGains.toFixed(2)+')';
 			
 			/* per win */
-			var averageTokenGains =  ( ZOANMasterJS.gameStats.fights[period].tokenGains / ZOANMasterJS.gameStats.fights[period].wins )
+			var averageTokenGains =  ( ZOANMasterJS.gameStats.fights[period].winData.tokenGains / ZOANMasterJS.gameStats.fights[period].wins )
 			var marketAverageTokenGains = ZOANMasterJS.marketPrices.zoon * averageTokenGains;
 			document.querySelector('.stat-average-zoon-win').innerText = averageTokenGains.toFixed(2) + ' ($'+marketAverageTokenGains.toFixed(2)+')';
 		}
@@ -768,7 +794,7 @@
 			document.querySelector('.stat-average-fee-battle').innerText = averageFees.toFixed(4) + ' ($'+marketAverageFees.toFixed(2)+')';
 			
 			/* per win */
-			var averageFees =  ( ZOANMasterJS.gameStats.fights[period].fees / ZOANMasterJS.gameStats.fights[period].wins )
+			var averageFees =  ( ZOANMasterJS.gameStats.fights[period].winData.fees / ZOANMasterJS.gameStats.fights[period].wins )
 			var marketAverageFees = ZOANMasterJS.marketPrices.bnb * averageFees;
 			document.querySelector('.stat-average-fee-win').innerText = averageFees.toFixed(4) + ' ($'+marketAverageFees.toFixed(2)+')';
 		}
