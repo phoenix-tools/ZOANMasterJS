@@ -3,14 +3,14 @@
  * @title ZOANMasterJS.js
  * @description Welcome ZOANMasterJS! ZOANMasterJS is a JS class that enhances the app.cryptozoon.io UX experience while also offering an edge to battle
  * 
- * @ver 2.2.4
+ * @ver 2.3.1
  * @author: phoenixtools
  * @contributors: Hudson Atwell
- */
+ */ 
  
  var ZOANMasterJS = {
     
-	version: "2.2.4",
+	version: "2.3.1",
     scriptsLoaded : false,
 	balances : {},
 	zoans : {},
@@ -57,8 +57,8 @@
 		document.querySelector('.ZOANMasterJS').parentNode.removeChild(document.querySelector('.ZOANMasterJS'));
 		
 		/* remove fight history */
-		document.querySelector('.fight-history').parentNode.removeChild(document.querySelector('.fight-history'));
-			
+		document.querySelector('.zoanmaster-stats-container').parentNode.removeChild(document.querySelector('.zoanmaster-stats-container'));
+		
 		/* destroy all current intervals */
 		for (key in ZOANMasterJS.intervals) {
 			clearInterval(ZOANMasterJS.intervals[key])
@@ -206,23 +206,70 @@
 		/**
 		 * Listen for Fight Stats reveal
 		 */ 
-		 if (document.querySelector('.show-fight') && !ZOANMasterJS.listeners.showFights) {
+		 if (document.querySelector('.show-zoan-fight') && !ZOANMasterJS.listeners.showZoanFights) {
 
-			ZOANMasterJS.listeners.showFights = true;
+			ZOANMasterJS.listeners.showZoanFights = true;
+				
+			document.querySelector('.show-zoan-fight').addEventListener('click', function() {
+				
+				/* show stats container*/
+				document.querySelector('.zoanmaster-stats-container').style.display = "flex";
+				
+				/* make sure box stat history is closed */
+				document.querySelector('.box-stat-history').style.display = "none"
+				document.querySelector('.stats-row-2').style.display = "none"
+				document.querySelector('.stats-row-3').style.display = "none"
+				ZOANMasterJS.listeners.row2 = false;
+				ZOANMasterJS.listeners.row3 = false;
+				
+				var fightHistory = document.querySelector('.zoan-fight-history');
+				
+				if (window.getComputedStyle(fightHistory).display == "none") {
+					fightHistory.style.display = "flow-root";
+					fightHistory.style.height = "100vh";
+					ZOANMasterJS.topOffet = "100vh";
+					document.querySelector('.cycle-fight-history').style.display = "flow-root";
+				}
+				else {
+					document.querySelector('.zoanmaster-stats-container').style.display = "none";
+					document.querySelector('.cycle-fight-history').style.display = "none";
+					fightHistory.style.display = "none";
+					ZOANMasterJS.topOffet = "33px";
+				}
+				
+				/* make sure the correct fights are displayed */
+				var fighRecords = document.querySelectorAll(".fight-record." + ZOANMasterJS.currentBattleScope ); 
+			    for(var i = 0; i < fighRecords.length; i++){
+			        fighRecords[i].style.display = "table-row"; // depending on what you're doing
+			    }
+			
+			})
+			
+		}
+		
+		/**
+		 * Listen for Fight Stats reveal
+		 */ 
+		 if (document.querySelector('.show-box-stats') && !ZOANMasterJS.listeners.showBoxStats) {
+
+			ZOANMasterJS.listeners.showBoxStats = true;
 			ZOANMasterJS.listeners.row2 = false;
 			ZOANMasterJS.listeners.row3 = false;
 				
-			document.querySelector('.show-fight').addEventListener('click', function() {
-				var fightHistory = document.querySelector('.fight-history');
-				var row1 = document.querySelector('.stats-row-1');
-				var row2 = document.querySelector('.stats-row-2');
-				var row3 = document.querySelector('.stats-row-3');
+			document.querySelector('.show-box-stats').addEventListener('click', function() {
+				document.querySelector('.zoanmaster-stats-container').style.display = "flex";
+				document.querySelector('.zoan-fight-history').style.display = "none";
+				var fightHistory = document.querySelector('.box-stat-history');
+				var row1 = fightHistory.querySelector('.stats-row-1');
+				var row2 = fightHistory.querySelector('.stats-row-2');
+				var row3 = fightHistory.querySelector('.stats-row-3');
 				
 				
 				if (window.getComputedStyle(fightHistory).display == "none") {
 					fightHistory.style.display = "flow-root";
 					fightHistory.style.height = "100vh";
 					ZOANMasterJS.topOffet = "100vh";
+					document.querySelector('.cycle-fight-history').style.display = "flow-root";
 				}
 				else if (!ZOANMasterJS.listeners.row2) {
 					row2.style.display = "flex"
@@ -235,6 +282,8 @@
 					
 				}
 				else {
+					document.querySelector('.zoanmaster-stats-container').style.display = "none";
+					document.querySelector('.cycle-fight-history').style.display = "none";
 					fightHistory.style.display = "none";
 					row2.style.display = "none";
 					row3.style.display = "none";
@@ -258,6 +307,13 @@
 			/* listen for TIP ZOON event */
 			document.querySelector('.cycle-fight-stats-forward').addEventListener('click', function() {
 				
+				/* make sure the old fights records are hidden */
+				var fighRecords = document.querySelectorAll(".fight-record." + ZOANMasterJS.currentBattleScope ); 
+			    for(var i = 0; i < fighRecords.length; i++){
+			        fighRecords[i].style.display = "none"; // depending on what you're doing
+			    }
+			
+				
 				switch(ZOANMasterJS.currentBattleScope) {
 					case "today":
 						ZOANMasterJS.currentBattleScope = "week";
@@ -280,6 +336,13 @@
 				
 				/* replce all the statistics */
 				ZOANMasterJS.loadFightHistoryStats(ZOANMasterJS.currentBattleScope)
+				
+				
+				/* make sure the correct fights are displayed */
+				var fighRecords = document.querySelectorAll(".fight-record." + ZOANMasterJS.currentBattleScope ); 
+			    for(var i = 0; i < fighRecords.length; i++){
+			        fighRecords[i].style.display = "table-row"; // depending on what you're doing
+			    }
 			
 			} )
 		}
@@ -296,6 +359,12 @@
 			/* listen for TIP ZOON event */
 			document.querySelector('.cycle-fight-stats-backward').addEventListener('click', function() {
 				
+				/* make sure the old fights records are hidden */
+				var fighRecords = document.querySelectorAll(".fight-record." + ZOANMasterJS.currentBattleScope ); 
+			    for(var i = 0; i < fighRecords.length; i++){
+			        fighRecords[i].style.display = "none"; // depending on what you're doing
+			    }
+				
 				switch(ZOANMasterJS.currentBattleScope) {
 					case "today":
 						ZOANMasterJS.currentBattleScope = "all";
@@ -318,6 +387,12 @@
 				
 				/* replce all the statistics */
 				ZOANMasterJS.loadFightHistoryStats(ZOANMasterJS.currentBattleScope)
+				
+				/* make sure the correct fights are displayed */
+				var fighRecords = document.querySelectorAll(".fight-record." + ZOANMasterJS.currentBattleScope ); 
+			    for(var i = 0; i < fighRecords.length; i++){
+			        fighRecords[i].style.display = "table-row"; // depending on what you're doing
+			    }
 			
 			} )
 		}
@@ -409,9 +484,14 @@
 		+ '     <b> <span class="dono-days-remaining"></span></b>'
 		+ '		</div>'
 
-		+ '		<div class="show-fight" style="display:none;cursor:pointer;" title="Toggle Fight History">'
+		+ '		<div class="show-zoan-fight" style="display:none;cursor:pointer;" title="Toggle Fight History">'
 		+ '     <span class="header-separator"> | </span>'
 		+ '     🐣'
+		+ '		</div>'
+		
+		+ '		<div class="show-box-stats" style="display:none;cursor:pointer;" title="Toggle Fight History">'
+		+ '     <span class="header-separator"> | </span>'
+		+ '     📅'
 		+ '		</div>'
 				
 		+ '		<div class="prompt-update" style="display:none;" title="A new version of ZOANMasterJS is available now!">'
@@ -442,7 +522,8 @@
 		
 		var htmlTemplate = ''
 
-    	+ '	<div class="fight-history" style="">'
+    	+ '<div class="zoanmaster-stats-container" style="">'
+    	+ '	<div class="cycle-fight-history" style="display:none;">'
     	+ '		<div style="color: #f6f6f6;margin-left: auto;margin-right: auto;width: 100%;text-align: center;margin-top: 16px;background-color:rebeccapurple;">'
     	+ '			<span class="cycle-fight-stats-backward" style="cursor:pointer;">'
     	+ '				👈'
@@ -454,11 +535,13 @@
     	+ '				👉'
     	+ '			</span>'
     	+ '		</div>'
-    	
+    	+ '	</div>'
+    	+ '	<div class="zoan-fight-history" style="">'
     	+ '    <div class="stats--container zoans-selection" style="margin-top:3px;flex-flow: wrap;width: 100%;">'
-		
 		+ '    </div>'
+		+ '	</div>'
     
+    	+ '	<div class="box-stat-history" style="display:none;">'
 		+ '    <div class="stats--container stats-row-1" style="">'
 		+ ' 		<div class="stat--container">'
 		+ '     		<div class="stat--label">OVERALL WIN PERCENTAGE</div>'
@@ -530,10 +613,13 @@
 		+ '    </div>'
 		
 		
+		+ '	</div>'
 		+ '</div>'
+		
 		+ '    <style>'
-		+ '        .fight-history {'
+		+ '        .zoanmaster-stats-container {'
 		+ '     		display:none;'
+		+ '     		flex-direction: column;'
 		+ '				height:100vh;'
 		+ '				background-color:#000;'
 		+ '				padding-top: 29px;'
@@ -683,8 +769,6 @@
 				ZOANMasterJS.balances.usd_bnb =  ( parseFloat(ZOANMasterJS.balances.bnb , 8 ) * parseFloat(ZOANMasterJS.marketPrices.bnb , 8 ) ).toFixed(2);
 				
 				ZOANMasterJS.balances.zoon_bnb =  ( parseFloat(ZOANMasterJS.balances.usd_bnb , 8 ) / parseFloat(ZOANMasterJS.marketPrices.zoon , 8 ) ).toFixed(2);
-				
-				
 						
 				/* figure out zoon balance */
 				ZOANMasterJS.balances.usd_zoon =  ( parseFloat(ZOANMasterJS.balances.zoon , 8 ) * parseFloat(ZOANMasterJS.marketPrices.zoon , 8 ) ).toFixed(2);
@@ -719,6 +803,9 @@
 			
 				/* Calculate Fight History Stats */
 				ZOANMasterJS.loadFightHistoryStats(ZOANMasterJS.currentBattleScope)
+				
+				/* asset is ready to show stats */
+				document.querySelector('.show-box-stats').style.display = "inline-block";
 			};
 		
 		};
@@ -939,7 +1026,7 @@
 		}
 		
 		/* asset is ready to show stats */
-		document.querySelector('.show-fight').style.display = "inline-block";
+		document.querySelector('.show-zoan-fight').style.display = "inline-block";
 		
 		/* loop through zoans and create Zoan selection inside of the fight history */
 		zoanCardsHTML = '<style>'
@@ -1015,7 +1102,7 @@
 			+'							EXP GAINS'
 			+'						</th>'
 			+'						<th>'
-			+'							TOKEN GAINS'
+			+'							ZOON'
 			+'						</th>'
 			+'						<th>'
 			+'							FEES'
@@ -1056,7 +1143,7 @@
 			+'						</td>'
 			
 			+'						<td class="td-value" style="color: gold;">'
-			+'							<span id="'+key+'-tokens">'+ZOANMasterJS.gameStats.fights.nfts[key].today.tokenGains+'</span>'
+			+'							<span id="'+key+'-tokens">'+ZOANMasterJS.gameStats.fights.nfts[key].today.tokenGains.toFixed(3)+'</span>'
 			+'						</td>'
 
 			+'						<td class="td-value" style="color: darkgray;">'
@@ -1071,7 +1158,100 @@
 			+'			</div >'
 			+'		</div>'
 			+'</div>'
-		}
+			
+			
+		};
+		
+		/* loop through fights and create zoan fight history table */
+		zoanCardsHTML = zoanCardsHTML + ''
+		+'<div class="zoanmaster-zoan-fight-card" id="zoanmaster-fight-record-'+key+'" style="width:100%; background-color: indigo; margin-bottom: 3px; display: inline-table;border-radius: 5px;margin-top:20px;">'
+		+'		<div class="" style="display:flex;flex:1;min-height:auto !important;">'
+		+'			<table style="width:100%;  text-align: center;">'
+		+'				<tr style="    background-color: rebeccapurple;">'
+		+'					<th>'
+		+'						DATE'
+		+'					</th>'
+		+'					<th>'
+		+'						ZOAN ID'
+		+'					</th>'
+		+'					<th>'
+		+'						MONSTER LEVEL'
+		+'					</th>'
+		+'					<th>'
+		+'						RESULT'
+		+'					</th>'
+		+'					<th>'
+		+'						ZOON'
+		+'					</th>'
+		+'					<th>'
+		+'						FEE'
+		+'					</th>'
+		+'					<th>'
+		+'						PROFIT'
+		+'					</th>'
+		+'				</tr>';
+		
+		var fights = Object.keys(Object.entries(ZOANMasterJS.gameStats.fights.records)).reverse();
+		//console.log(fights);
+		fights.forEach(function(fightKey) {
+			
+			var fight = ZOANMasterJS.gameStats.fights.records[fightKey];
+			
+			var date = new Date(fight.timeStamp * 1000).toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+			
+			var win = (fight.win) ? "<span style='color:lightgreen;background-color: lightgreen;padding-left: 20px;padding-right: 20px;padding-top: 3px;padding-bottom: 3px;color: #605eb6;border-radius: 3px;'>WIN</span>" :  "<span style=''>LOSS</span>"
+			
+
+			/* get market value of tokens */
+			var marketTokens = ZOANMasterJS.marketPrices.zoon * fight.token;
+		
+			
+			/* get market value of fees */
+			var marketBNB = ZOANMasterJS.marketPrices.bnb * fight.feeBnb;
+		
+			/* subtract the two for profit */
+			var profit = marketTokens - marketBNB;
+			
+			if (profit < 0 ) {
+				profit = '<span style="color:darkgray;">-$' + profit.toFixed(2).replace('-','') + '</span>';
+			} else {
+				profit= '<span style="color:chartreuse;font-weight:900;">$' + profit.toFixed(2) + '</span>';
+			}
+			
+			var bgcolor = (fightKey % 2) ? "#530b9b" : "indigo";
+			
+			zoanCardsHTML = zoanCardsHTML + ''
+			
+			+'					<tr style="background-color:'+bgcolor+';display:none;" class="fight-record '+fight.sortClass+'">'
+			+'						<td style="padding-top: 10px;padding-bottom: 10px;">'
+			+'							<span id="'+key+'-winPercentage">'+date+'</span>'
+			+'						</td>'
+			+'						<td style="padding-top: 10px;padding-bottom: 10px;">'
+			+'							<span id="'+key+'-rare">'+fight.zoanId+'</span>'
+			+'						</td>'
+			+'						<td style="padding-top: 10px;padding-bottom: 10px;">'
+			+'							<span id="'+key+'-level">'+ parseInt(fight.enemyLevel + 1)+'</span>'
+			+'						</td>'
+			+'						<td style="padding-top: 10px;padding-bottom: 10px;">'
+			+'							<span id="'+key+'-class">'+win+'</span>'
+			+'						</td>'
+			+'						<td style="padding-top: 10px;padding-bottom: 10px;color:gold;font-weight:600;">'
+			+'							<span id="'+key+'-wins">'+fight.token+'</span>'
+			+'						</td>'
+			+'						<td style="padding-top: 10px;padding-bottom: 10px;">'
+			+'							<span id="'+key+'-wins">'+fight.feeBnb+'</span>'
+			+'						</td>'
+
+			+'						<td style="padding-top: 10px;padding-bottom: 10px;">'
+			+'							<span id="'+key+'-losses">'+profit+'</span>'
+			+'						</td>'
+			+'					</tr>';
+		});
+		
+		zoanCardsHTML = zoanCardsHTML + ''
+		+'				</table>'
+		+'		</div>'
+		+'</div>'
 	
 		document.querySelector('.zoans-selection').innerHTML = zoanCardsHTML;
 	}
