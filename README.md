@@ -12,11 +12,10 @@ You can still download and install this asset and enjoy a 14 day free trial with
 
 ## Features
 
-* Prominently displays the USD market prices of BNB and ZOON
-* Prominently displays the current user's ZOON balance as well as its converted values in USD and BNB
-* Prominently displays the current user's BNB balance as well as its converted values in USD and ZOON
-* Shows user BNB fee expenditure for the CrytoZoon game in the following ranges: 24 hours, 7 days, 31 days.
-* Provides fight tracking statistics that keeps track of win percentage, ZOON Payouts, BNB expenditures, and overall profits based on current market prices.
+* Prominently displays the USD market prices of BNB, ZOON, and YAG
+* Prominently displays the current user's ZOON/YAG balance as well as its converted values in USD and BNB
+* Prominently displays the current user's BNB balance as well as its converted values in USD 
+* Shows ZOAN profitability performance as well as averaged performance statistics across the 24 hour, 7 day, ans 31 day time ranges.
 
 ## Feature Screenshots
 
