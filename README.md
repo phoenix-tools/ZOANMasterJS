@@ -29,10 +29,11 @@ We're now tracking both Yaki Gold and Zoon.
 
 ### ZOANMasterJS Header
 
-![image](https://user-images.githubusercontent.com/2002207/129460752-afb2a731-a143-4019-8dc3-02192d0e5e67.png)
+![image](https://user-images.githubusercontent.com/2002207/132252233-8d5cab87-e5be-4fc9-8aca-7e15917b306e.png)
 
-### Battle History Insights
-![image](https://user-images.githubusercontent.com/2002207/130895535-d66b766e-d63d-4a07-9575-1c7cb3f75393.png)
+### Battle History Insights\
+
+![image](https://user-images.githubusercontent.com/2002207/132252269-d029be03-06a4-4bc1-9bd1-4b099940f55e.png)
 
 ## How to Install in Chrome
 
