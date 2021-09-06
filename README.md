@@ -20,6 +20,13 @@ You can still download and install this asset and enjoy a 14 day free trial with
 
 ## Feature Screenshots
 
+### Zoan Profitability Tracking
+
+We're now tracking both Yaki Gold and Zoon.
+
+![image](https://user-images.githubusercontent.com/2002207/132252120-a45a3851-6cf3-4437-a517-a94b30563dca.png)
+
+
 ### ZOANMasterJS Header
 
 ![image](https://user-images.githubusercontent.com/2002207/129460752-afb2a731-a143-4019-8dc3-02192d0e5e67.png)
