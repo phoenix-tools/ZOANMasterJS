@@ -3,14 +3,14 @@
  * @title ZOANMasterJS.js
  * @description Welcome ZOANMasterJS! ZOANMasterJS is a JS class that enhances the app.cryptozoon.io UX experience while also offering an edge to battle
  * 
- * @ver 2.3.1
+ * @ver 2.4.1
  * @author: phoenixtools
  * @contributors: Hudson Atwell
- */ 
+ */
  
  var ZOANMasterJS = {
     
-	version: "2.3.1",
+	version: "2.4.1",
     scriptsLoaded : false,
 	balances : {},
 	zoans : {},
@@ -211,18 +211,14 @@
 			ZOANMasterJS.listeners.showZoanFights = true;
 				
 			document.querySelector('.show-zoan-fight').addEventListener('click', function() {
+				var fightHistory = document.querySelector('.zoan-fight-history');
 				
 				/* show stats container*/
 				document.querySelector('.zoanmaster-stats-container').style.display = "flex";
 				
 				/* make sure box stat history is closed */
 				document.querySelector('.box-stat-history').style.display = "none"
-				document.querySelector('.stats-row-2').style.display = "none"
-				document.querySelector('.stats-row-3').style.display = "none"
-				ZOANMasterJS.listeners.row2 = false;
-				ZOANMasterJS.listeners.row3 = false;
 				
-				var fightHistory = document.querySelector('.zoan-fight-history');
 				
 				if (window.getComputedStyle(fightHistory).display == "none") {
 					fightHistory.style.display = "flow-root";
@@ -253,16 +249,12 @@
 		 if (document.querySelector('.show-box-stats') && !ZOANMasterJS.listeners.showBoxStats) {
 
 			ZOANMasterJS.listeners.showBoxStats = true;
-			ZOANMasterJS.listeners.row2 = false;
-			ZOANMasterJS.listeners.row3 = false;
 				
 			document.querySelector('.show-box-stats').addEventListener('click', function() {
 				document.querySelector('.zoanmaster-stats-container').style.display = "flex";
 				document.querySelector('.zoan-fight-history').style.display = "none";
 				var fightHistory = document.querySelector('.box-stat-history');
-				var row1 = fightHistory.querySelector('.stats-row-1');
-				var row2 = fightHistory.querySelector('.stats-row-2');
-				var row3 = fightHistory.querySelector('.stats-row-3');
+
 				
 				
 				if (window.getComputedStyle(fightHistory).display == "none") {
@@ -271,24 +263,10 @@
 					ZOANMasterJS.topOffet = "100vh";
 					document.querySelector('.cycle-fight-history').style.display = "flow-root";
 				}
-				else if (!ZOANMasterJS.listeners.row2) {
-					row2.style.display = "flex"
-					ZOANMasterJS.listeners.row2 = true;
-					
-				}
-				else if (!ZOANMasterJS.listeners.row3) {
-					row3.style.display = "flex"
-					ZOANMasterJS.listeners.row3 = true;
-					
-				}
 				else {
 					document.querySelector('.zoanmaster-stats-container').style.display = "none";
 					document.querySelector('.cycle-fight-history').style.display = "none";
 					fightHistory.style.display = "none";
-					row2.style.display = "none";
-					row3.style.display = "none";
-					ZOANMasterJS.listeners.row2 = false;
-					ZOANMasterJS.listeners.row3 = false;
 					ZOANMasterJS.topOffet = "33px";
 				}
 			
@@ -431,7 +409,7 @@
 		var htmlTemplate = ''
 		+ '<div class="ZOANMasterJS" style="background-color: #000; color:#fff;display:flex;justify-content:space-between;flex-wrap: wrap;font-family:system-ui;text-align: end;padding-right:26px;position:fixed; width:100vw;z-index:100;padding-left:2px;padding-top:4px;padding-bottom:2px; font-size:13px;">'
 	
-		+ '<div class="bm-col-1" style="padding-top: 5px;padding-left:5px;">'
+		+ '<div class="bm-col-1" style="padding-top: 0px;padding-left:5px;">'
 		+ '		<span id="refresh-zoanmaster" style="color: lightgreen;margin-right: 4px;cursor: pointer;" title="Reload ZoanMasterJS">♻</span>'
 		+ '		<b>ZOANMasterJS</b> '
 		
@@ -443,39 +421,48 @@
 		
 		+ '		<b>$ZOON</b> <span class="zoon-price" title="Market price of zoon in USD"></span>'
 		
+		+ '		<span class="header-separator" style="margin-left:10px;margin-right:10px"> | </span>'
+		
+		+ '		<b>$YAG</b> <span class="yag-price" title="Market price of Yaki Gold in USD"></span>'
+		
 		+ '	</div>'
 		
 		+ ' <div  class="bm-col-2">'
 		
-		+ '		<div class="zoon-ballance-container" style="display:inline-block;">'
+		+ '		<div class="zoon-balance-container" style="display:inline-block;">'
 		+ '			<b>ZOON</b>:  <span class="zoon-balance-zoon" style="color:gold"></span>  <span class="zoon-balance-usd" style="color:lightgreen"></span>  <span class="zoon-balance-bnb" style="color:lightgreen"></span>'
+		+ '			<span class="header-separator" style="margin-left:10px;margin-right:10px"> | </span>'
+		+ '     </div>'	
+		
+		+ '		<div class="yag-balance-container" style="display:inline-block;">'
+		+ '			<b>YAG</b>:  <span class="yag-balance-yag" style="color:gold"></span>  <span class="yag-balance-usd" style="color:lightgreen"></span>  <span class="yag-balance-bnb" style="color:lightgreen"></span>'
 		+ '			<span class="header-separator" style="margin-left:10px;margin-right:10px"> | </span>'
 		+ '     </div>'
 		
 
-		+ '		<div class="bnb-ballance-container" style="display:inline-block;">'
-		+ '			<b>BNB</b>:  <span class="bnb-balance-bnb" style="color:lightblue"></span>  <span class="bnb-balance-usd" style="color:lightgreen"></span>  <span class="bnb-balance-zoon" style="color:lightgreen"></span>'
+		+ '		<div class="bnb-balance-container" style="display:inline-block;">'
+		+ '			<b>BNB</b>:  <span class="bnb-balance-bnb" style="color:lightblue"></span>  <span class="bnb-balance-usd" style="color:lightgreen"></span>  <span class="bnb-balance-zoon" style="color:lightgreen;display:none;"></span>'
 		
 		+ '			<span class="header-separator"  style="margin-left:10px;margin-right:10px"> | </span>'
 		+ '     </div>'
 		
 		
-		+ '		<div class="fees-container" style="display:inline-block;">'
-		+ '			<b>FEES</b>:  '
+		//+ '		<div class="fees-container" style="display:inline-block;">'
+		//+ '			<b>FEES</b>:  '
 		
 		//+ '		<span class="cycle-fee-scope-back" style=""><img src="/img/earning-potential-sword.753769a3.png" class="sword-right" style="width:25px;transform: scaleX(-1);margin-left: 10px;    margin-right: -3px;    margin-left: 2px;"></span>'
 		
-		+ ' 		<span class="fee-label fee-bnb" id="fee-bnb-contatiner-today" style="color:mintcream;"><span class="fee-bnb-today" style="color:lightblue"></span><span class="fee-usd-today" style="color:LIGHTSALMON"></span> <span style="font-size: 10px;margin-left: 3px;">LAST 24 HOURS</span> </span>'
+		//+ ' 		<span class="fee-label fee-bnb" id="fee-bnb-contatiner-today" style="color:mintcream;"><span class="fee-bnb-today" style="color:lightblue"></span><span class="fee-usd-today" style="color:LIGHTSALMON"></span> <span style="font-size: 10px;margin-left: 3px;">LAST 24 HOURS</span> </span>'
 		
-		+ '     	<span class="fee-labe fee-bnb" id="fee-bnb-contatiner-week" style="color:mintcream;display:none;"><span class="fee-bnb-week" style="color:lightblue"></span><span class="fee-usd-week" style="color:LIGHTSALMON"></span> <span style="font-size: 10px;margin-left: 3px;">LAST 7 DAYS</span> </span>'
+		//+ '     	<span class="fee-labe fee-bnb" id="fee-bnb-contatiner-week" style="color:mintcream;display:none;"><span class="fee-bnb-week" style="color:lightblue"></span><span class="fee-usd-week" style="color:LIGHTSALMON"></span> <span style="font-size: 10px;margin-left: 3px;">LAST 7 DAYS</span> </span>'
 		
-		+ '     	<span class="fee-label fee-bnb" id="fee-bnb-contatiner-month" style="color:mintcream;display:none"><span class="fee-bnb-month" style="color:lightblue"></span><span class="fee-usd-month" style="color:LIGHTSALMON"></span><span style="font-size: 10px;margin-left: 3px;"> LAST 31 DAYS</span> </span> '
+		//+ '     	<span class="fee-label fee-bnb" id="fee-bnb-contatiner-month" style="color:mintcream;display:none"><span class="fee-bnb-month" style="color:lightblue"></span><span class="fee-usd-month" style="color:LIGHTSALMON"></span><span style="font-size: 10px;margin-left: 3px;"> LAST 31 DAYS</span> </span> '
 		
-		+ '		<span class="cycle-fee-scope-forward" style="cursor:pointer;font-size: 19px;vertical-align: middle;"> ➞ </span>'
-		+ '		</div>'
+		//+ '		<span class="cycle-fee-scope-forward" style="cursor:pointer;font-size: 19px;vertical-align: middle;"> ➞ </span>'
+		//+ '		</div>'
 		
 		+ '		<div class="bnb-tip-container" style="display:none;">'		
-		+ '     	<span class="header-separator" style="margin-left:10px;margin-right:10px"> | </span>'
+		//	+ '     	<span class="header-separator" style="margin-left:10px;margin-right:10px"> | </span>'
 		+ '     	<a class="bnb-tip"  href="#tip-ZOANMasterJS-dev"  title="Send a Tip to the ZOANMasterJS Developemnt Team!"><b>TIP <span class="recommended-bnb-tip">.01</span> BNB</b></a>'
 		+ '		</div>'
 		
@@ -536,7 +523,7 @@
     	+ '			</span>'
     	+ '		</div>'
     	+ '	</div>'
-    	+ '	<div class="zoan-fight-history" style="">'
+    	+ '	<div class="zoan-fight-history" style="display:none">'
     	+ '    <div class="stats--container zoans-selection" style="margin-top:3px;flex-flow: wrap;width: 100%;">'
 		+ '    </div>'
 		+ '	</div>'
@@ -559,9 +546,15 @@
 		+ '         	<div class="stat--label">LOSSES</div>'
 		+ '         	<div class="stat--value stat-losses" >0</div>'
 		+ '        </div>'
+		+ '     </div>'
+		+'		<div class="stats--container stats-row-2" style="">'
 		+ '     	<div class="stat--container">'
 		+ '         	<div class="stat--label">ZOON EARNED</div>'
 		+ '         	<div class="stat--value stat-tokens" style="color:gold;">.0</div>'
+		+ '     	</div>'		
+		+ '     	<div class="stat--container">'
+		+ '         	<div class="stat--label">YAG EARNED</div>'
+		+ '         	<div class="stat--value stat-yag" style="color:gold;">.0</div>'
 		+ '     	</div>'
 		+ '     	<div class="stat--container">'
 		+ '            <div class="stat--label">FEES BNB</div>'
@@ -573,11 +566,15 @@
 		+ '     	</div>'
 		+ '    </div>'
 		
-		+ ' 	<div class="stats--container stats-row-2" style=" display:none;">'
+		+ ' 	<div class="stats--container stats-row-3" style="">'
 
 		+ '     	<div class="stat--container">'
 		+ '     		<div class="stat--label">AVERAGE ZOON / BATTLE</div>'
 		+ '     		<div class="stat--value stat-average-zoon-battle" style="color:gold">0</div>'
+		+ '     	</div>'
+		+ '     	<div class="stat--container">'
+		+ '     		<div class="stat--label">AVERAGE YAG / BATTLE</div>'
+		+ '     		<div class="stat--value stat-average-yag-battle" style="color:gold">0</div>'
 		+ '     	</div>'
 		+ '     	<div class="stat--container">'
 		+ '         	<div class="stat--label">AVERAGE EXP / BATTLE</div>'
@@ -593,10 +590,14 @@
 		+ '     	</div>'
 		+ '    </div>'
 		
-		+ '    <div class="stats--container stats-row-3" style=" display:none;">'
+		+ '    <div class="stats--container stats-row-4" style="">'
 		+ '        <div class="stat--container">'
 		+ '         	<div class="stat--label">AVERAGE ZOON / WIN</div>'
 		+ '         	<div class="stat--value stat-average-zoon-win" style="color:gold">0</div>'
+		+ '         </div>'
+		+ '        <div class="stat--container">'
+		+ '         	<div class="stat--label">AVERAGE YAG / WIN</div>'
+		+ '         	<div class="stat--value stat-average-yag-win" style="color:gold">0</div>'
 		+ '         </div>'
 		+ '     	<div class="stat--container">'
 		+ '         	<div class="stat--label">AVERAGE EXP / WIN</div>'
@@ -689,7 +690,7 @@
 			
 		var params = {
             vs_currency: "usd",
-            ids: "binancecoin,cryptozoon"
+            ids: "binancecoin,cryptozoon,yaki-gold"
         }
         
         var apiURL = new URL("https://api.coingecko.com/api/v3/coins/markets");
@@ -708,10 +709,12 @@
 
 			ZOANMasterJS.marketPrices.bnb = ZOANMasterJS.coinGecko[0].current_price;
 			ZOANMasterJS.marketPrices.zoon = ZOANMasterJS.coinGecko[1].current_price;
+			ZOANMasterJS.marketPrices.yag = ZOANMasterJS.coinGecko[2].current_price;
 			
 			/* set these prices into the header */
-			document.querySelector('.bnb-price').innerText = "" + ZOANMasterJS.marketPrices.bnb +" "
-			document.querySelector('.zoon-price').innerText = "" + ZOANMasterJS.marketPrices.zoon + " "
+			document.querySelector('.bnb-price').innerText = "" + ZOANMasterJS.marketPrices.bnb.toFixed(3) +" "
+			document.querySelector('.zoon-price').innerText = "" + ZOANMasterJS.marketPrices.zoon.toFixed(3) + " "
+			document.querySelector('.yag-price').innerText = "" + ZOANMasterJS.marketPrices.yag.toFixed(3) + " "
 			
 			
 			/* load BNB Balance and Calculate Transactions from Custom API */
@@ -722,7 +725,7 @@
 	            clientDateTime: new Date().getTime(),
 	            clientTimeZoneOffset: new Date().getTimezoneOffset(),
 	            product: "zoanmasterjs",
-	            query: ["tokenBalance","bnbBalance","txFees","fights"]
+	            query: ["tokenBalance","yagBalance","bnbBalance","txFees","fights"]
 	        }
 	        
 	        apiURL = new URL("https://phoenixtools.io/api/gamestats/");
@@ -746,8 +749,8 @@
 					document.querySelector('.bnb-tip-container').style.display = "inline-block";
 					
 					document.querySelector('.bm-col-1').innerHTML = '<div class="dono-activate-promot" style="display: contents;padding-right:10px;width:100%;"><marquee>YOOOOO! <b>ZOANMasterJS</b> costs <span style="color:gold"><b>.01 BNB</b></span> for every <b>40 days</b> of use. --------  Click the <b>TIP</b> button to the right to activate your copy!  --------  Make sure your <b>MetaMask</b> is set to the <b>Binance Smart Chain</b> before tipping!  -------- There might be a delay between tipping and asset activation depending on the speed of the bscscan.com API. If activation takes longer than an hour then please reach out on our <a href="https://discord.gg/6AjVj3s9aN" target="_blank">Discord</a> for manual assistance :) </marquee></div>';
-					document.querySelector('.zoon-ballance-container').parentNode.removeChild(document.querySelector('.zoon-ballance-container'))
-					document.querySelector('.bnb-ballance-container').parentNode.removeChild(document.querySelector('.bnb-ballance-container'))
+					document.querySelector('.zoon-balance-container').parentNode.removeChild(document.querySelector('.zoon-balance-container'))
+					document.querySelector('.bnb-balance-container').parentNode.removeChild(document.querySelector('.bnb-balance-container'))
 					document.querySelector('.fees-container').parentNode.removeChild(document.querySelector('.fees-container'))
 					return;
 				} 
@@ -763,42 +766,55 @@
 				
 				/* get user zoon balance, does not include staked zoon */
 				ZOANMasterJS.balances.zoon = parseFloat(ZOANMasterJS.gameStats.balances.token.inETH).toFixed(2);
+				ZOANMasterJS.balances.yag = parseFloat(ZOANMasterJS.gameStats.balances.yag.inETH).toFixed(2);
 				ZOANMasterJS.balances.bnb = parseFloat(ZOANMasterJS.gameStats.balances.bnb.inETH).toFixed(3);
 				
 				/* figure out dollar balance */
 				ZOANMasterJS.balances.usd_bnb =  ( parseFloat(ZOANMasterJS.balances.bnb , 8 ) * parseFloat(ZOANMasterJS.marketPrices.bnb , 8 ) ).toFixed(2);
 				
 				ZOANMasterJS.balances.zoon_bnb =  ( parseFloat(ZOANMasterJS.balances.usd_bnb , 8 ) / parseFloat(ZOANMasterJS.marketPrices.zoon , 8 ) ).toFixed(2);
+				
+				ZOANMasterJS.balances.yag_bnb =  ( parseFloat(ZOANMasterJS.balances.usd_bnb , 8 ) / parseFloat(ZOANMasterJS.marketPrices.yag , 8 ) ).toFixed(2);
 						
 				/* figure out zoon balance */
 				ZOANMasterJS.balances.usd_zoon =  ( parseFloat(ZOANMasterJS.balances.zoon , 8 ) * parseFloat(ZOANMasterJS.marketPrices.zoon , 8 ) ).toFixed(2);
+				
 				ZOANMasterJS.balances.bnb_zoon =  ( parseFloat(ZOANMasterJS.balances.usd_zoon , 8 ) / parseFloat(ZOANMasterJS.marketPrices.bnb , 8 ) ).toFixed(2);
+				
+				/* figure out yag balance */
+				ZOANMasterJS.balances.usd_yag =  ( parseFloat(ZOANMasterJS.balances.yag , 8 ) * parseFloat(ZOANMasterJS.marketPrices.yag , 8 ) ).toFixed(2);
+				
+				ZOANMasterJS.balances.bnb_yag =  ( parseFloat(ZOANMasterJS.balances.usd_yag , 8 ) / parseFloat(ZOANMasterJS.marketPrices.bnb , 8 ) ).toFixed(2);
+			
 			
 				
 				/* set these prices into the header */
 				document.querySelector('.zoon-balance-zoon').innerText =  ZOANMasterJS.balances.zoon + " ZOON  "
 				document.querySelector('.zoon-balance-usd').innerText = " +$" + ZOANMasterJS.balances.usd_zoon + " "
 				document.querySelector('.zoon-balance-bnb').innerText = " +" + ZOANMasterJS.balances.bnb_zoon + "BNB "
+				document.querySelector('.yag-balance-yag').innerText =  ZOANMasterJS.balances.yag + " YAG  "
+				document.querySelector('.yag-balance-usd').innerText = " +$" + ZOANMasterJS.balances.usd_yag + " "
+				document.querySelector('.yag-balance-bnb').innerText = " +" + ZOANMasterJS.balances.bnb_yag + "BNB "
 				document.querySelector('.bnb-balance-bnb').innerText =  ZOANMasterJS.balances.bnb + " BNB  "
 				document.querySelector('.bnb-balance-usd').innerText = " +$" + ZOANMasterJS.balances.usd_bnb + " "
 				document.querySelector('.bnb-balance-zoon').innerText = " +" + ZOANMasterJS.balances.zoon_bnb + " ZOON "
 				
 				/* calculate fee bnb cost in USD */
-				var feesTodayUSD = ZOANMasterJS.gameStats.txFees.today * ZOANMasterJS.marketPrices.bnb;
-				var feesWeekUSD = ZOANMasterJS.gameStats.txFees.thisWeek * ZOANMasterJS.marketPrices.bnb;
-				var feesMonthUSD = ZOANMasterJS.gameStats.txFees.thisMonth * ZOANMasterJS.marketPrices.bnb;
+				//var feesTodayUSD = ZOANMasterJS.gameStats.txFees.today * ZOANMasterJS.marketPrices.bnb;
+				//var feesWeekUSD = ZOANMasterJS.gameStats.txFees.thisWeek * ZOANMasterJS.marketPrices.bnb;
+				//var feesMonthUSD = ZOANMasterJS.gameStats.txFees.thisMonth * ZOANMasterJS.marketPrices.bnb;
 				
 				/* add day fees to UI */
-				document.querySelector('.fee-bnb-today').innerText = parseFloat(ZOANMasterJS.gameStats.txFees.today).toFixed(3) + " BNB "
-				document.querySelector('.fee-usd-today').innerText = " ($"+ parseFloat(feesTodayUSD).toFixed(3) + ") "
+				//document.querySelector('.fee-bnb-today').innerText = parseFloat(ZOANMasterJS.gameStats.txFees.today).toFixed(3) + " BNB "
+				//document.querySelector('.fee-usd-today').innerText = " ($"+ parseFloat(feesTodayUSD).toFixed(2) + ") "
 				
 				/* add week fees to UI */
-				document.querySelector('.fee-bnb-week').innerText =  parseFloat(ZOANMasterJS.gameStats.txFees.thisWeek).toFixed(3) + " BNB "
-				document.querySelector('.fee-usd-week').innerText =  " ($"+ parseFloat(feesWeekUSD).toFixed(3) + ") "
+				//document.querySelector('.fee-bnb-week').innerText =  parseFloat(ZOANMasterJS.gameStats.txFees.thisWeek).toFixed(3) + " BNB "
+				//document.querySelector('.fee-usd-week').innerText =  " ($"+ parseFloat(feesWeekUSD).toFixed(2) + ") "
 				
 				/* add month fees to UI */
-				document.querySelector('.fee-bnb-month').innerText =  parseFloat(ZOANMasterJS.gameStats.txFees.thisMonth).toFixed(3) + " BNB "
-				document.querySelector('.fee-usd-month').innerText =   " ($"+ parseFloat(feesMonthUSD).toFixed(3) + ") "
+				//document.querySelector('.fee-bnb-month').innerText =  parseFloat(ZOANMasterJS.gameStats.txFees.thisMonth).toFixed(3) + " BNB "
+				//document.querySelector('.fee-usd-month').innerText =   " ($"+ parseFloat(feesMonthUSD).toFixed(2) + ") "
 				
 			
 				/* Calculate Fight History Stats */
@@ -822,19 +838,21 @@
 		document.querySelector('.stat-battles').innerText = ZOANMasterJS.gameStats.fights[period].totalFights;
 		document.querySelector('.stat-wins').innerText = ZOANMasterJS.gameStats.fights[period].wins;
 		document.querySelector('.stat-losses').innerText = ZOANMasterJS.gameStats.fights[period].losses;
-		
-		/* calculate profit */
-		/* get market value of tokens */
+
+		/* get market value of zoon */
 		var marketTokens = ZOANMasterJS.marketPrices.zoon * ZOANMasterJS.gameStats.fights[period].tokenGains;
 		document.querySelector('.stat-tokens').innerText = ZOANMasterJS.gameStats.fights[period].tokenGains.toFixed(2) + ' ($' + marketTokens.toFixed(2) +')';
-
+		
+		/* get market value of yag */
+		var marketYag = ZOANMasterJS.marketPrices.yag * ZOANMasterJS.gameStats.fights[period].yagGains;
+		document.querySelector('.stat-yag').innerText = ZOANMasterJS.gameStats.fights[period].yagGains.toFixed(2) + ' ($' + marketYag.toFixed(2) +')';
 		
 		/* get market value of fees */
 		var marketBNB = ZOANMasterJS.marketPrices.bnb * ZOANMasterJS.gameStats.fights[period].fees;
 		document.querySelector('.stat-fees').innerText = ZOANMasterJS.gameStats.fights[period].fees.toFixed(3) + ' ($' + marketBNB.toFixed(2) +')';
 		
 		/* subtract the two for profit */
-		var profit = marketTokens - marketBNB;
+		var profit = marketTokens + marketYag- marketBNB;
 		
 		if (profit < 0 ) {
 			document.querySelector('.stat-profit').style.color = "tomato"; 
@@ -862,6 +880,8 @@
 		if (!ZOANMasterJS.gameStats.fights[period].expGains) {
 			document.querySelector('.stat-average-zoon-battle').innerText = "0"; 
 			document.querySelector('.stat-average-zoon-win').innerText = "0"; 
+			document.querySelector('.stat-average-yag-battle').innerText = "0"; 
+			document.querySelector('.stat-average-yag-win').innerText = "0"; 
 		} else {
 			/* per battle */
 			var averageExpGains =  ( ZOANMasterJS.gameStats.fights[period].expGains / ZOANMasterJS.gameStats.fights[period].totalFights )
@@ -873,19 +893,32 @@
 		}
 		
 		/* get average ZOON */
-		if (!ZOANMasterJS.gameStats.fights[period].tokenGains) {
+		if (!ZOANMasterJS.gameStats.fights[period].tokenGains && !ZOANMasterJS.gameStats.fights[period].yagGains) {
 			document.querySelector('.stat-average-zoon-battle').innerText = "0"; 
 			document.querySelector('.stat-average-zoon-win').innerText = "0"; 
+			document.querySelector('.stat-average-yag-battle').innerText = "0"; 
+			document.querySelector('.stat-average-yag-win').innerText = "0"; 
 		} else {
+			
 			/* per battle */
 			var averageTokenGains =  ( ZOANMasterJS.gameStats.fights[period].tokenGains / ZOANMasterJS.gameStats.fights[period].totalFights )
 			var marketAverageTokenGains = ZOANMasterJS.marketPrices.zoon * averageTokenGains;
 			document.querySelector('.stat-average-zoon-battle').innerText = averageTokenGains.toFixed(2) + ' ($'+marketAverageTokenGains.toFixed(2)+')';
 			
+			var averageYagGains =  ( ZOANMasterJS.gameStats.fights[period].yagGains / ZOANMasterJS.gameStats.fights[period].totalFights )
+			var marketAverageYagGains = ZOANMasterJS.marketPrices.yag * averageYagGains;
+			document.querySelector('.stat-average-yag-battle').innerText = averageYagGains.toFixed(2) + ' ($'+marketAverageYagGains.toFixed(2)+')';
+			
+			
 			/* per win */
 			var averageTokenGains =  ( ZOANMasterJS.gameStats.fights[period].winData.tokenGains / ZOANMasterJS.gameStats.fights[period].wins )
 			var marketAverageTokenGains = ZOANMasterJS.marketPrices.zoon * averageTokenGains;
 			document.querySelector('.stat-average-zoon-win').innerText = averageTokenGains.toFixed(2) + ' ($'+marketAverageTokenGains.toFixed(2)+')';
+			
+			
+			var averageYagGains =  ( ZOANMasterJS.gameStats.fights[period].winData.yagGains / ZOANMasterJS.gameStats.fights[period].wins )
+			var marketAverageYagGains = ZOANMasterJS.marketPrices.yag * averageYagGains;
+			document.querySelector('.stat-average-yag-win').innerText = averageYagGains.toFixed(2) + ' ($'+marketAverageYagGains.toFixed(2)+')';
 		}
 		
 		/* get average fee */
@@ -935,7 +968,6 @@
 		
 		/* load NFT Battle history */
 		if (Object.keys(ZOANMasterJS.zoans).length == 0) {
-			//console.log("zoan selection area not loaded yet");
 			return;
 		}
 		
@@ -953,13 +985,16 @@
 			
 			/* get market value of tokens */
 			var marketTokens = ZOANMasterJS.marketPrices.zoon * ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].tokenGains;
+		
+			/* get market value of yag */
+			var marketYag = ZOANMasterJS.marketPrices.yag * ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].yagGains;
 	
 			/* get market value of fees */
 			var marketBNB = ZOANMasterJS.marketPrices.bnb * ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].fees;
-			var fees = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].fees.toFixed(3) + ' ($' + marketBNB.toFixed(2) +')';
+			var fees = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].fees.toFixed(2) + ' ($' + marketBNB.toFixed(2) +')';
 			
 			/* subtract the two for profit */
-			var profit = marketTokens - marketBNB;
+			var profit = marketTokens + marketYag - marketBNB;
 			
 			if (profit < 0 ) {
 				profit = '<span style="color:tomato;">-$' + profit.toFixed(2).replace('-','') + '</span>';
@@ -967,14 +1002,13 @@
 				profit= '<span style="color:chartreuse;">$' + profit.toFixed(2) + '</span>';
 			}
 			
-			//console.log(key + '-fights');
-			//console.log(ZOANMasterJS.currentBattleScope);
 			document.getElementById(key + '-fights').innerText = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].totalFights;
 			document.getElementById(key + '-winPercentage').innerHTML = winPercentage;
 			document.getElementById(key + '-expGains').innerText = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].expGains.toFixed(0);
 			document.getElementById(key + '-wins').innerText = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].wins;
 			document.getElementById(key + '-losses').innerText = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].losses;
 			document.getElementById(key + '-tokens').innerText = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].tokenGains.toFixed(0);
+			document.getElementById(key + '-yag').innerText = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].yagGains.toFixed(0);
 			document.getElementById(key + '-fees').innerHTML = fees;
 			document.getElementById(key + '-profit').innerHTML = profit;
 			
@@ -1011,17 +1045,14 @@
 		});
 		
 		if (zoanCards.length <1 ) {
-			//console.log("no zoan loaded");
 			return;
 		}
 		
 		if (document.querySelector('.zoanmaster-zoan-card')) {
-			//console.log("zoan selection area already loaded");
 			return;
 		}
 		
 		if (typeof ZOANMasterJS.gameStats.fights  == "undefined" ) {
-			//console.log("gameStats not loaded yet");
 			return;
 		}
 		
@@ -1031,9 +1062,9 @@
 		/* loop through zoans and create Zoan selection inside of the fight history */
 		zoanCardsHTML = '<style>'
 					+'		.zm-right .td-value {'  
-					+'			height: 76px;'
+					+'			height: 58px;'
 			    	+'			vertical-align: bottom;'
-			    	+'			font-size: 20px;'
+			    	+'			font-size: 16px;'
 			    	+'			max-width: 162px;'
 			    	+'			min-width: 100px;'
 					+'		}'
@@ -1053,12 +1084,16 @@
 			/* get market value of tokens */
 			var marketTokens = ZOANMasterJS.marketPrices.zoon * ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].tokenGains;
 	
+			
+			/* get market value of tokens */
+			var marketYag = ZOANMasterJS.marketPrices.yag * ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].yagGains;
+	
 			/* get market value of fees */
 			var marketBNB = ZOANMasterJS.marketPrices.bnb * ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].fees;
-			var fees = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].fees.toFixed(3) + ' ($' + marketBNB.toFixed(2) +')';
+			var fees = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].fees.toFixed(2) + ' ($' + marketBNB.toFixed(2) +')';
 			
 			/* subtract the two for profit */
-			var profit = marketTokens - marketBNB;
+			var profit = marketTokens + marketYag - marketBNB;
 			
 			if (profit < 0 ) {
 				profit = '<span style="color:tomato;">-$' + profit.toFixed(2).replace('-','') + '</span>';
@@ -1105,6 +1140,9 @@
 			+'							ZOON'
 			+'						</th>'
 			+'						<th>'
+			+'							YAG'
+			+'						</th>'
+			+'						<th>'
 			+'							FEES'
 			+'						</th>'
 			+'						<th>'
@@ -1143,7 +1181,11 @@
 			+'						</td>'
 			
 			+'						<td class="td-value" style="color: gold;">'
-			+'							<span id="'+key+'-tokens">'+ZOANMasterJS.gameStats.fights.nfts[key].today.tokenGains.toFixed(3)+'</span>'
+			+'							<span id="'+key+'-tokens">'+ZOANMasterJS.gameStats.fights.nfts[key].today.tokenGains.toFixed(2)+'</span>'
+			+'						</td>'
+			
+			+'						<td class="td-value" style="color: gold;">'
+			+'							<span id="'+key+'-yag">'+ZOANMasterJS.gameStats.fights.nfts[key].today.yagGains.toFixed(2)+'</span>'
 			+'						</td>'
 
 			+'						<td class="td-value" style="color: darkgray;">'
@@ -1184,6 +1226,9 @@
 		+'						ZOON'
 		+'					</th>'
 		+'					<th>'
+		+'						YAG'
+		+'					</th>'
+		+'					<th>'
 		+'						FEE'
 		+'					</th>'
 		+'					<th>'
@@ -1192,7 +1237,7 @@
 		+'				</tr>';
 		
 		var fights = Object.keys(Object.entries(ZOANMasterJS.gameStats.fights.records)).reverse();
-		//console.log(fights);
+
 		fights.forEach(function(fightKey) {
 			
 			var fight = ZOANMasterJS.gameStats.fights.records[fightKey];
@@ -1204,13 +1249,15 @@
 
 			/* get market value of tokens */
 			var marketTokens = ZOANMasterJS.marketPrices.zoon * fight.token;
-		
+			
+			/* get market value of yag */
+			var marketYag = ZOANMasterJS.marketPrices.yag * fight.yag;
 			
 			/* get market value of fees */
 			var marketBNB = ZOANMasterJS.marketPrices.bnb * fight.feeBnb;
 		
 			/* subtract the two for profit */
-			var profit = marketTokens - marketBNB;
+			var profit = marketTokens + marketYag- marketBNB;
 			
 			if (profit < 0 ) {
 				profit = '<span style="color:darkgray;">-$' + profit.toFixed(2).replace('-','') + '</span>';
@@ -1236,7 +1283,10 @@
 			+'							<span id="'+key+'-class">'+win+'</span>'
 			+'						</td>'
 			+'						<td style="padding-top: 10px;padding-bottom: 10px;color:gold;font-weight:600;">'
-			+'							<span id="'+key+'-wins">'+fight.token+'</span>'
+			+'							<span id="'+key+'-token">'+fight.token.toFixed(2)+'</span>'
+			+'						</td>'
+			+'						<td style="padding-top: 10px;padding-bottom: 10px;color:gold;font-weight:600;">'
+			+'							<span id="'+key+'-yag">'+fight.yag.toFixed(2)+'</span>'
 			+'						</td>'
 			+'						<td style="padding-top: 10px;padding-bottom: 10px;">'
 			+'							<span id="'+key+'-wins">'+fight.feeBnb+'</span>'
