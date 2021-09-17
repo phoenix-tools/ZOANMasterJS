@@ -3,14 +3,14 @@
  * @title ZOANMasterJS.js
  * @description Welcome ZOANMasterJS! ZOANMasterJS is a JS class that enhances the app.cryptozoon.io UX experience while also offering an edge to battle
  * 
- * @ver 2.4.1
+ * @ver 2.4.2
  * @author: phoenixtools
  * @contributors: Hudson Atwell
  */
  
  var ZOANMasterJS = {
     
-	version: "2.4.1",
+	version: "2.4.2",
     scriptsLoaded : false,
 	balances : {},
 	zoans : {},
@@ -30,7 +30,6 @@
 		this.loadBattleHistory();
 		this.loadHeader();
 		this.loadWeb3();
-		this.readZones();
 		
 		setTimeout(function(dm) {
 			if (!window.ethereum.selectedAddress) {
@@ -166,7 +165,7 @@
 			ZOANMasterJS.listeners.navClick = true;
 			
 			document.querySelector('.nav-item').addEventListener('click', function() {
-				//console.log("nav item clicked")
+
 			})
 		}
 		
@@ -212,6 +211,7 @@
 				
 			document.querySelector('.show-zoan-fight').addEventListener('click', function() {
 				var fightHistory = document.querySelector('.zoan-fight-history');
+	
 				
 				/* show stats container*/
 				document.querySelector('.zoanmaster-stats-container').style.display = "flex";
@@ -467,7 +467,7 @@
 		+ '		</div>'
 		
 		+ '		<div class="bnb-free-trial-counter" style="display:none;" title="Days remaining in the free ZOANMasterJS trial.">'
-		+ '     <span class="header-separator"> | </span>'
+		//+ '     <span class="header-separator"> | </span>'
 		+ '     <b> <span class="dono-days-remaining"></span></b>'
 		+ '		</div>'
 
@@ -816,12 +816,16 @@
 				//document.querySelector('.fee-bnb-month').innerText =  parseFloat(ZOANMasterJS.gameStats.txFees.thisMonth).toFixed(3) + " BNB "
 				//document.querySelector('.fee-usd-month').innerText =   " ($"+ parseFloat(feesMonthUSD).toFixed(2) + ") "
 				
+				
+				/* Try and read zoan nft data */
+				ZOANMasterJS.readZones();
 			
 				/* Calculate Fight History Stats */
 				ZOANMasterJS.loadFightHistoryStats(ZOANMasterJS.currentBattleScope)
 				
 				/* asset is ready to show stats */
 				document.querySelector('.show-box-stats').style.display = "inline-block";
+				
 			};
 		
 		};
@@ -1002,6 +1006,7 @@
 				profit= '<span style="color:chartreuse;">$' + profit.toFixed(2) + '</span>';
 			}
 			
+
 			document.getElementById(key + '-fights').innerText = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].totalFights;
 			document.getElementById(key + '-winPercentage').innerHTML = winPercentage;
 			document.getElementById(key + '-expGains').innerText = ZOANMasterJS.gameStats.fights.nfts[key][ZOANMasterJS.currentBattleScope].expGains.toFixed(0);
@@ -1258,6 +1263,7 @@
 		
 			/* subtract the two for profit */
 			var profit = marketTokens + marketYag- marketBNB;
+
 			
 			if (profit < 0 ) {
 				profit = '<span style="color:darkgray;">-$' + profit.toFixed(2).replace('-','') + '</span>';
