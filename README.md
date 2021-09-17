@@ -30,7 +30,7 @@ We're now tracking both Yaki Gold and Zoon.
 
 ![image](https://user-images.githubusercontent.com/2002207/132252233-8d5cab87-e5be-4fc9-8aca-7e15917b306e.png)
 
-### Battle History Insights\
+### Battle History Insights
 
 ![image](https://user-images.githubusercontent.com/2002207/132252269-d029be03-06a4-4bc1-9bd1-4b099940f55e.png)
 
