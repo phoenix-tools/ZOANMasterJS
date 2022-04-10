@@ -1,6 +1,6 @@
 # Note to readers re:CryptoZoons
 
-This project, along with BladeMasterJS, taught me a lot of about the nature of ponzi schemes. I do not recommend investing time or money into CryptoZoon, and for that, I can't recommend putting any of your time into installing this add-on JS extension. But I had a lot of fun building it. And I'm proud of the work. 
+The CryptoZoons game, for me, was a bad investment and a cautionary tale about blockchain, tokenomics, and the play-to-earn sector. I don't recommend investing in this game and for that reasn I can't recommend ZOANMasterJS as an add-on browser extension. Nevertheless, I had a lot of fun building it. 
 
 # ZOANMasterJS
 [![Discord](https://img.shields.io/discord/870816354612170842?color=%235865f2&label=Discord&logo=discord&logoColor=%23fff&style=for-the-badge)](https://discord.gg/6AjVj3s9aN)
